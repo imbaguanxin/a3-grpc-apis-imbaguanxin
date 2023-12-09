@@ -1,0 +1,137 @@
+syntax = "proto3";
+
+// Define enumeration for post states
+enum PostState {
+  POST_STATE_NORMAL = 0;
+  POST_STATE_LOCKED = 1;
+  POST_STATE_HIDDEN = 2;
+}
+
+// Define enumeration for comment states
+enum CommentState {
+  COMMENT_STATE_NORMAL = 0;
+  COMMENT_STATE_HIDDEN = 1;
+}
+
+message User {
+  optional string user_id = 1;
+}
+
+message Post {
+  optional int64 post_id = 1;
+  optional string title = 2;
+  optional string text = 3;
+  oneof content {
+    string video_url = 4;
+    string image_url = 5;
+  }
+  optional string author = 6;
+  optional int32 score = 7;
+  optional PostState post_state = 8;
+  optional string publication_date = 9;
+}
+
+message Comment {
+  optional int64 comment_id = 1;
+  optional int64 parent_post_id = 2;
+  optional int64 parent_comment_id = 3;
+  optional User author = 3;
+  optional string text = 4;
+  optional int32 score = 5;
+  optional CommentState state = 6;
+  optional string publication_date = 7;
+}
+
+service PostService {
+  rpc CreatePost(CreatePostRequest) returns (CreatePostResponse);
+
+  rpc VotePost(VotePostRequest) returns (VotePostResponse);
+
+  rpc GetPostContent(GetPostContentRequest) returns (GetPostContentResponse);
+
+  rpc CreateComment(CreateCommentRequest) returns (CreateCommentResponse);
+
+  rpc VoteComment(VoteCommentRequest) returns (CommentCommentResponse);
+
+  rpc GetMostUpvotedComments(GetMostUpvotedCommentsRequest) 
+  returns (GetMostUpvotedCommentsResponse);
+
+  rpc ExpandCommentBranch(ExpandCommentBranchRequest) 
+  returns (ExpandCommentBranchResponse);
+}
+
+message CreatePostRequest {
+  optional User user = 1;
+  optional Post post = 2;
+}
+
+message CreatePostResponse {
+  optional int64 post_id = 1;
+  optional bool success = 2;
+}
+
+message VotePostRequest {
+  optional int64 post_id = 1;
+  optional User user = 2;
+  optional bool is_upvote = 3;
+}
+
+message VotePostResponse {
+  optional int32 score = 1;
+  optional bool success = 2;
+}
+
+message GetPostContentRequest {
+  optional int64 post_id = 1;
+}
+
+message GetPostContentResponse {
+  optional Post post = 1;
+  repeated Comment comments = 2;
+}
+
+message CreateCommentRequest {
+  optional int64 post_id = 1;
+  optional User author = 2;
+  optional Comment comment = 3;
+}
+
+message CreateCommentResponse {
+  optional int64 comment_id = 1;
+  optional bool success = 2;
+}
+
+message VoteCommentRequest {
+  optional int64 comment_id = 1;
+  optional User user = 2;
+  optional bool is_upvote = 3;
+}
+
+message VoteCommentResponse {
+  optional int32 score = 1;
+  optional bool success = 2;
+}
+
+message GetMostUpvotedCommentsRequest {
+  optional int64 post_id = 1;
+  optional int32 limit = 2;
+}
+
+message CommentAndSubcommentsCount {
+  optional Comment comment = 1;
+  optional int32 subcomments_count = 2;
+}
+
+message GetMostUpvotedCommentsResponse {
+  repeated CommentAndSubcommentsCount comments = 1;
+}
+
+message ExpandCommentBranchRequest {
+  optional int64 comment_id = 1;
+  optional int32 limit = 2;
+}
+
+message ExpandCommentBranchResponse {
+  optional Comment root_comment = 1;
+  repeated Comment comments = 2;
+}
