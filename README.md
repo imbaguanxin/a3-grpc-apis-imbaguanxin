@@ -226,8 +226,42 @@ client: https://github.com/imbaguanxin/a3-grpc-apis-imbaguanxin/blob/main/client
 
 1. retrieve a post
 
+    implementation: 
+
+    https://github.com/imbaguanxin/a3-grpc-apis-imbaguanxin/blob/main/test.py#L12
+
+    test:
+
+    https://github.com/imbaguanxin/a3-grpc-apis-imbaguanxin/blob/main/test.py#L45
+
 2. retrieve most upvoted comments
 
+    implementation:
+
+    https://github.com/imbaguanxin/a3-grpc-apis-imbaguanxin/blob/main/test.py#L16
+
+    test:
+
+    https://github.com/imbaguanxin/a3-grpc-apis-imbaguanxin/blob/main/test.py#L77
+
 3. expand most upvoted comment
+    
+    implementation:
+
+    https://github.com/imbaguanxin/a3-grpc-apis-imbaguanxin/blob/main/test.py#L20
+
+    test:
+
+    https://github.com/imbaguanxin/a3-grpc-apis-imbaguanxin/blob/main/test.py#L138
 
 4. return the most upvoted reply under the most upvoted comment
+
+    implementation:
+
+    https://github.com/imbaguanxin/a3-grpc-apis-imbaguanxin/blob/main/test.py#L31
+
+    test:
+
+    https://github.com/imbaguanxin/a3-grpc-apis-imbaguanxin/blob/main/test.py#L281
+
+    https://github.com/imbaguanxin/a3-grpc-apis-imbaguanxin/blob/main/test.py#L344
