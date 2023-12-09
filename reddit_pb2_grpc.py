@@ -5,7 +5,7 @@ import grpc
 import reddit_pb2 as reddit__pb2
 
 
-class PostServiceStub(object):
+class RedditServiceStub(object):
     """Missing associated documentation comment in .proto file."""
 
     def __init__(self, channel):
@@ -15,43 +15,43 @@ class PostServiceStub(object):
             channel: A grpc.Channel.
         """
         self.CreatePost = channel.unary_unary(
-                '/PostService/CreatePost',
+                '/RedditService/CreatePost',
                 request_serializer=reddit__pb2.CreatePostRequest.SerializeToString,
                 response_deserializer=reddit__pb2.CreatePostResponse.FromString,
                 )
         self.VotePost = channel.unary_unary(
-                '/PostService/VotePost',
+                '/RedditService/VotePost',
                 request_serializer=reddit__pb2.VotePostRequest.SerializeToString,
                 response_deserializer=reddit__pb2.VotePostResponse.FromString,
                 )
         self.GetPostContent = channel.unary_unary(
-                '/PostService/GetPostContent',
+                '/RedditService/GetPostContent',
                 request_serializer=reddit__pb2.GetPostContentRequest.SerializeToString,
                 response_deserializer=reddit__pb2.GetPostContentResponse.FromString,
                 )
         self.CreateComment = channel.unary_unary(
-                '/PostService/CreateComment',
+                '/RedditService/CreateComment',
                 request_serializer=reddit__pb2.CreateCommentRequest.SerializeToString,
                 response_deserializer=reddit__pb2.CreateCommentResponse.FromString,
                 )
         self.VoteComment = channel.unary_unary(
-                '/PostService/VoteComment',
+                '/RedditService/VoteComment',
                 request_serializer=reddit__pb2.VoteCommentRequest.SerializeToString,
                 response_deserializer=reddit__pb2.VoteCommentResponse.FromString,
                 )
         self.GetMostUpvotedComments = channel.unary_unary(
-                '/PostService/GetMostUpvotedComments',
+                '/RedditService/GetMostUpvotedComments',
                 request_serializer=reddit__pb2.GetMostUpvotedCommentsRequest.SerializeToString,
                 response_deserializer=reddit__pb2.GetMostUpvotedCommentsResponse.FromString,
                 )
         self.ExpandCommentBranch = channel.unary_unary(
-                '/PostService/ExpandCommentBranch',
+                '/RedditService/ExpandCommentBranch',
                 request_serializer=reddit__pb2.ExpandCommentBranchRequest.SerializeToString,
                 response_deserializer=reddit__pb2.ExpandCommentBranchResponse.FromString,
                 )
 
 
-class PostServiceServicer(object):
+class RedditServiceServicer(object):
     """Missing associated documentation comment in .proto file."""
 
     def CreatePost(self, request, context):
@@ -97,7 +97,7 @@ class PostServiceServicer(object):
         raise NotImplementedError('Method not implemented!')
 
 
-def add_PostServiceServicer_to_server(servicer, server):
+def add_RedditServiceServicer_to_server(servicer, server):
     rpc_method_handlers = {
             'CreatePost': grpc.unary_unary_rpc_method_handler(
                     servicer.CreatePost,
@@ -136,12 +136,12 @@ def add_PostServiceServicer_to_server(servicer, server):
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
-            'PostService', rpc_method_handlers)
+            'RedditService', rpc_method_handlers)
     server.add_generic_rpc_handlers((generic_handler,))
 
 
  # This class is part of an EXPERIMENTAL API.
-class PostService(object):
+class RedditService(object):
     """Missing associated documentation comment in .proto file."""
 
     @staticmethod
@@ -155,7 +155,7 @@ class PostService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/PostService/CreatePost',
+        return grpc.experimental.unary_unary(request, target, '/RedditService/CreatePost',
             reddit__pb2.CreatePostRequest.SerializeToString,
             reddit__pb2.CreatePostResponse.FromString,
             options, channel_credentials,
@@ -172,7 +172,7 @@ class PostService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/PostService/VotePost',
+        return grpc.experimental.unary_unary(request, target, '/RedditService/VotePost',
             reddit__pb2.VotePostRequest.SerializeToString,
             reddit__pb2.VotePostResponse.FromString,
             options, channel_credentials,
@@ -189,7 +189,7 @@ class PostService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/PostService/GetPostContent',
+        return grpc.experimental.unary_unary(request, target, '/RedditService/GetPostContent',
             reddit__pb2.GetPostContentRequest.SerializeToString,
             reddit__pb2.GetPostContentResponse.FromString,
             options, channel_credentials,
@@ -206,7 +206,7 @@ class PostService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/PostService/CreateComment',
+        return grpc.experimental.unary_unary(request, target, '/RedditService/CreateComment',
             reddit__pb2.CreateCommentRequest.SerializeToString,
             reddit__pb2.CreateCommentResponse.FromString,
             options, channel_credentials,
@@ -223,7 +223,7 @@ class PostService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/PostService/VoteComment',
+        return grpc.experimental.unary_unary(request, target, '/RedditService/VoteComment',
             reddit__pb2.VoteCommentRequest.SerializeToString,
             reddit__pb2.VoteCommentResponse.FromString,
             options, channel_credentials,
@@ -240,7 +240,7 @@ class PostService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/PostService/GetMostUpvotedComments',
+        return grpc.experimental.unary_unary(request, target, '/RedditService/GetMostUpvotedComments',
             reddit__pb2.GetMostUpvotedCommentsRequest.SerializeToString,
             reddit__pb2.GetMostUpvotedCommentsResponse.FromString,
             options, channel_credentials,
@@ -257,7 +257,7 @@ class PostService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/PostService/ExpandCommentBranch',
+        return grpc.experimental.unary_unary(request, target, '/RedditService/ExpandCommentBranch',
             reddit__pb2.ExpandCommentBranchRequest.SerializeToString,
             reddit__pb2.ExpandCommentBranchResponse.FromString,
             options, channel_credentials,

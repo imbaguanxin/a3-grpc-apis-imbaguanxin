@@ -1,3 +1,12 @@
+# Assignment 3 grpc apis
+
+## repository link
+
+https://github.com/imbaguanxin/a3-grpc-apis-imbaguanxin
+
+## protocol buffer definitions:
+
+```
 syntax = "proto3";
 
 // Define enumeration for post states
@@ -41,7 +50,71 @@ message Comment {
   optional CommentState comment_state = 7;
   optional string publication_date = 8;
 }
+```
 
+## service definitions:
+
+1. CreatePost
+
+   takes in a CreatePostRequest and returns a CreatePostResponse
+
+   CreatePostRequest contains a Post object
+
+   CreatePostResponse contains a bool success and an int64 post_id
+
+2. VotePost
+
+   takes in a VotePostRequest and returns a VotePostResponse
+
+   VotePostRequest contains an int64 post_id, a User object representing the author and a bool is_upvote
+
+   VotePostResponse contains a bool success and an int64 score
+
+3. GetPostContent
+
+   takes in a GetPostContentRequest and returns a GetPostContentResponse
+
+   GetPostContentRequest contains an int64 post_id
+
+   GetPostContentResponse contains a bool success and a Post object
+
+4. CreateComment
+
+   takes in a CreateCommentRequest and returns a CreateCommentResponse
+
+   CreateCommentRequest contains a User object representing the author and a Comment object
+
+   CreateCommentResponse contains a bool success and an int64 comment_id
+
+5. VoteComment
+
+   takes in a VoteCommentRequest and returns a VoteCommentResponse
+
+   VoteCommentRequest contains an int64 comment_id, a User object representing the author and a bool is_upvote
+
+   VoteCommentResponse contains a bool success and an int64 score
+
+6. GetMostUpvotedComments
+
+   takes in a GetMostUpvotedCommentsRequest and returns a GetMostUpvotedCommentsResponse
+
+   GetMostUpvotedCommentsRequest contains an int64 post_id and an int64 limit
+
+   GetMostUpvotedCommentsResponse contains a list of CommentAndWetherSubcommentsExist objects
+
+   CommentAndWetherSubcommentsExist contains a Comment object and a bool has_subcomment
+
+7. ExpandCommentBranch
+
+   takes in a ExpandCommentBranchRequest and returns a ExpandCommentBranchResponse
+
+   ExpandCommentBranchRequest contains an int64 comment_id and an int64 limit
+
+   ExpandCommentBranchResponse contains a list of CommentAndSubcomments objects
+
+   CommentAndSubcomments contains a Comment object and a list of Comment objects
+
+```
 service RedditService {
   rpc CreatePost(CreatePostRequest) returns (CreatePostResponse);
 
@@ -53,10 +126,10 @@ service RedditService {
 
   rpc VoteComment(VoteCommentRequest) returns (VoteCommentResponse);
 
-  rpc GetMostUpvotedComments(GetMostUpvotedCommentsRequest) 
+  rpc GetMostUpvotedComments(GetMostUpvotedCommentsRequest)
   returns (GetMostUpvotedCommentsResponse);
 
-  rpc ExpandCommentBranch(ExpandCommentBranchRequest) 
+  rpc ExpandCommentBranch(ExpandCommentBranchRequest)
   returns (ExpandCommentBranchResponse);
 }
 
@@ -137,3 +210,24 @@ message CommentAndSubcomments {
 message ExpandCommentBranchResponse {
   repeated CommentAndSubcomments subcomments = 1;
 }
+```
+
+## storage backend
+
+Just used in memory storage. No persistence.
+
+## Server and Client link
+
+server: https://github.com/imbaguanxin/a3-grpc-apis-imbaguanxin/blob/main/server.py
+
+client: https://github.com/imbaguanxin/a3-grpc-apis-imbaguanxin/blob/main/client.py
+
+## high level functions and tests
+
+1. retrieve a post
+
+2. retrieve most upvoted comments
+
+3. expand most upvoted comment
+
+4. return the most upvoted reply under the most upvoted comment

@@ -44,11 +44,11 @@ class Post(_message.Message):
     text: str
     video_url: str
     image_url: str
-    author: str
+    author: User
     score: int
     post_state: PostState
     publication_date: str
-    def __init__(self, post_id: _Optional[int] = ..., title: _Optional[str] = ..., text: _Optional[str] = ..., video_url: _Optional[str] = ..., image_url: _Optional[str] = ..., author: _Optional[str] = ..., score: _Optional[int] = ..., post_state: _Optional[_Union[PostState, str]] = ..., publication_date: _Optional[str] = ...) -> None: ...
+    def __init__(self, post_id: _Optional[int] = ..., title: _Optional[str] = ..., text: _Optional[str] = ..., video_url: _Optional[str] = ..., image_url: _Optional[str] = ..., author: _Optional[_Union[User, _Mapping]] = ..., score: _Optional[int] = ..., post_state: _Optional[_Union[PostState, str]] = ..., publication_date: _Optional[str] = ...) -> None: ...
 
 class Comment(_message.Message):
     __slots__ = ["comment_id", "parent_post_id", "parent_comment_id", "author", "text", "score", "comment_state", "publication_date"]
@@ -71,20 +71,18 @@ class Comment(_message.Message):
     def __init__(self, comment_id: _Optional[int] = ..., parent_post_id: _Optional[int] = ..., parent_comment_id: _Optional[int] = ..., author: _Optional[_Union[User, _Mapping]] = ..., text: _Optional[str] = ..., score: _Optional[int] = ..., comment_state: _Optional[_Union[CommentState, str]] = ..., publication_date: _Optional[str] = ...) -> None: ...
 
 class CreatePostRequest(_message.Message):
-    __slots__ = ["user", "post"]
-    USER_FIELD_NUMBER: _ClassVar[int]
+    __slots__ = ["post"]
     POST_FIELD_NUMBER: _ClassVar[int]
-    user: User
     post: Post
-    def __init__(self, user: _Optional[_Union[User, _Mapping]] = ..., post: _Optional[_Union[Post, _Mapping]] = ...) -> None: ...
+    def __init__(self, post: _Optional[_Union[Post, _Mapping]] = ...) -> None: ...
 
 class CreatePostResponse(_message.Message):
-    __slots__ = ["post_id", "success"]
-    POST_ID_FIELD_NUMBER: _ClassVar[int]
+    __slots__ = ["success", "post_id"]
     SUCCESS_FIELD_NUMBER: _ClassVar[int]
-    post_id: int
+    POST_ID_FIELD_NUMBER: _ClassVar[int]
     success: bool
-    def __init__(self, post_id: _Optional[int] = ..., success: bool = ...) -> None: ...
+    post_id: int
+    def __init__(self, success: bool = ..., post_id: _Optional[int] = ...) -> None: ...
 
 class VotePostRequest(_message.Message):
     __slots__ = ["post_id", "user", "is_upvote"]
@@ -97,12 +95,12 @@ class VotePostRequest(_message.Message):
     def __init__(self, post_id: _Optional[int] = ..., user: _Optional[_Union[User, _Mapping]] = ..., is_upvote: bool = ...) -> None: ...
 
 class VotePostResponse(_message.Message):
-    __slots__ = ["score", "success"]
-    SCORE_FIELD_NUMBER: _ClassVar[int]
+    __slots__ = ["success", "score"]
     SUCCESS_FIELD_NUMBER: _ClassVar[int]
-    score: int
+    SCORE_FIELD_NUMBER: _ClassVar[int]
     success: bool
-    def __init__(self, score: _Optional[int] = ..., success: bool = ...) -> None: ...
+    score: int
+    def __init__(self, success: bool = ..., score: _Optional[int] = ...) -> None: ...
 
 class GetPostContentRequest(_message.Message):
     __slots__ = ["post_id"]
@@ -111,30 +109,28 @@ class GetPostContentRequest(_message.Message):
     def __init__(self, post_id: _Optional[int] = ...) -> None: ...
 
 class GetPostContentResponse(_message.Message):
-    __slots__ = ["post", "comments"]
+    __slots__ = ["success", "post"]
+    SUCCESS_FIELD_NUMBER: _ClassVar[int]
     POST_FIELD_NUMBER: _ClassVar[int]
-    COMMENTS_FIELD_NUMBER: _ClassVar[int]
+    success: bool
     post: Post
-    comments: _containers.RepeatedCompositeFieldContainer[Comment]
-    def __init__(self, post: _Optional[_Union[Post, _Mapping]] = ..., comments: _Optional[_Iterable[_Union[Comment, _Mapping]]] = ...) -> None: ...
+    def __init__(self, success: bool = ..., post: _Optional[_Union[Post, _Mapping]] = ...) -> None: ...
 
 class CreateCommentRequest(_message.Message):
-    __slots__ = ["post_id", "author", "comment"]
-    POST_ID_FIELD_NUMBER: _ClassVar[int]
+    __slots__ = ["author", "comment"]
     AUTHOR_FIELD_NUMBER: _ClassVar[int]
     COMMENT_FIELD_NUMBER: _ClassVar[int]
-    post_id: int
     author: User
     comment: Comment
-    def __init__(self, post_id: _Optional[int] = ..., author: _Optional[_Union[User, _Mapping]] = ..., comment: _Optional[_Union[Comment, _Mapping]] = ...) -> None: ...
+    def __init__(self, author: _Optional[_Union[User, _Mapping]] = ..., comment: _Optional[_Union[Comment, _Mapping]] = ...) -> None: ...
 
 class CreateCommentResponse(_message.Message):
-    __slots__ = ["comment_id", "success"]
-    COMMENT_ID_FIELD_NUMBER: _ClassVar[int]
+    __slots__ = ["success", "comment_id"]
     SUCCESS_FIELD_NUMBER: _ClassVar[int]
-    comment_id: int
+    COMMENT_ID_FIELD_NUMBER: _ClassVar[int]
     success: bool
-    def __init__(self, comment_id: _Optional[int] = ..., success: bool = ...) -> None: ...
+    comment_id: int
+    def __init__(self, success: bool = ..., comment_id: _Optional[int] = ...) -> None: ...
 
 class VoteCommentRequest(_message.Message):
     __slots__ = ["comment_id", "user", "is_upvote"]
@@ -147,12 +143,12 @@ class VoteCommentRequest(_message.Message):
     def __init__(self, comment_id: _Optional[int] = ..., user: _Optional[_Union[User, _Mapping]] = ..., is_upvote: bool = ...) -> None: ...
 
 class VoteCommentResponse(_message.Message):
-    __slots__ = ["score", "success"]
-    SCORE_FIELD_NUMBER: _ClassVar[int]
+    __slots__ = ["success", "score"]
     SUCCESS_FIELD_NUMBER: _ClassVar[int]
-    score: int
+    SCORE_FIELD_NUMBER: _ClassVar[int]
     success: bool
-    def __init__(self, score: _Optional[int] = ..., success: bool = ...) -> None: ...
+    score: int
+    def __init__(self, success: bool = ..., score: _Optional[int] = ...) -> None: ...
 
 class GetMostUpvotedCommentsRequest(_message.Message):
     __slots__ = ["post_id", "limit"]
@@ -193,9 +189,7 @@ class CommentAndSubcomments(_message.Message):
     def __init__(self, comment: _Optional[_Union[Comment, _Mapping]] = ..., subcomments: _Optional[_Iterable[_Union[Comment, _Mapping]]] = ...) -> None: ...
 
 class ExpandCommentBranchResponse(_message.Message):
-    __slots__ = ["root_comment", "subcomments"]
-    ROOT_COMMENT_FIELD_NUMBER: _ClassVar[int]
+    __slots__ = ["subcomments"]
     SUBCOMMENTS_FIELD_NUMBER: _ClassVar[int]
-    root_comment: Comment
     subcomments: _containers.RepeatedCompositeFieldContainer[CommentAndSubcomments]
-    def __init__(self, root_comment: _Optional[_Union[Comment, _Mapping]] = ..., subcomments: _Optional[_Iterable[_Union[CommentAndSubcomments, _Mapping]]] = ...) -> None: ...
+    def __init__(self, subcomments: _Optional[_Iterable[_Union[CommentAndSubcomments, _Mapping]]] = ...) -> None: ...
