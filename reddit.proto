@@ -35,11 +35,11 @@ message Comment {
   optional int64 comment_id = 1;
   optional int64 parent_post_id = 2;
   optional int64 parent_comment_id = 3;
-  optional User author = 3;
-  optional string text = 4;
-  optional int32 score = 5;
-  optional CommentState state = 6;
-  optional string publication_date = 7;
+  optional User author = 4;
+  optional string text = 5;
+  optional int32 score = 6;
+  optional CommentState comment_state = 7;
+  optional string publication_date = 8;
 }
 
 service PostService {
@@ -51,7 +51,7 @@ service PostService {
 
   rpc CreateComment(CreateCommentRequest) returns (CreateCommentResponse);
 
-  rpc VoteComment(VoteCommentRequest) returns (CommentCommentResponse);
+  rpc VoteComment(VoteCommentRequest) returns (VoteCommentResponse);
 
   rpc GetMostUpvotedComments(GetMostUpvotedCommentsRequest) 
   returns (GetMostUpvotedCommentsResponse);
@@ -117,13 +117,13 @@ message GetMostUpvotedCommentsRequest {
   optional int32 limit = 2;
 }
 
-message CommentAndSubcommentsCount {
+message CommentAndWetherSubcommentsExist {
   optional Comment comment = 1;
-  optional int32 subcomments_count = 2;
+  optional bool has_subcomment = 2;
 }
 
 message GetMostUpvotedCommentsResponse {
-  repeated CommentAndSubcommentsCount comments = 1;
+  repeated CommentAndWetherSubcommentsExist comments = 1;
 }
 
 message ExpandCommentBranchRequest {
@@ -131,7 +131,12 @@ message ExpandCommentBranchRequest {
   optional int32 limit = 2;
 }
 
+message CommentAndSubcomments {
+  optional Comment comment = 1;
+  repeated Comment subcomments = 2;
+}
+
 message ExpandCommentBranchResponse {
   optional Comment root_comment = 1;
-  repeated Comment comments = 2;
+  repeated CommentAndSubcomments subcomments = 2;
 }
